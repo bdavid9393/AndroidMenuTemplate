@@ -1,4 +1,4 @@
-package com.example.android.roomwordssample;
+package com.example.android.roomwordssample.adapters;
 
 /*
  * Copyright (C) 2017 Google Inc.
@@ -23,7 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Collections;
+import com.example.android.roomwordssample.R;
+import com.example.android.roomwordssample.enitiy.Word;
+
 import java.util.List;
 
 
@@ -41,7 +43,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     private final LayoutInflater mInflater;
     private List<Word> mWords; // Cached copy of words
 
-    WordListAdapter(Context context) {
+    public WordListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
@@ -62,7 +64,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         }
     }
 
-    void setWords(List<Word> words) {
+    public void setWords(List<Word> words) {
         mWords = words;
         notifyDataSetChanged();
     }

@@ -1,4 +1,4 @@
-package com.example.android.roomwordssample;
+package com.example.android.roomwordssample.enitiy;
 
 /*
  * Copyright (C) 2017 Google Inc.
@@ -16,12 +16,10 @@ package com.example.android.roomwordssample;
  * limitations under the License.
  */
 
-import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
-import androidx.annotation.NonNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -49,7 +47,6 @@ abstract class WordRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WordRoomDatabase.class, "word_database")
-                            .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
@@ -64,24 +61,24 @@ abstract class WordRoomDatabase extends RoomDatabase {
      * If you want to populate the database only when the database is created for the 1st time,
      * override RoomDatabase.Callback()#onCreate
      */
-    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
-
-            // If you want to keep data through app restarts,
-            // comment out the following block
-            databaseWriteExecutor.execute(() -> {
-                // Populate the database in the background.
-                // If you want to start with more words, just add them.
-                WordDao dao = INSTANCE.wordDao();
-                dao.deleteAll();
-
-                Word word = new Word("Hello");
-                dao.insert(word);
-                word = new Word("World");
-                dao.insert(word);
-            });
-        }
-    };
+//    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+//        @Override
+//        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+//            super.onOpen(db);
+//
+//            // If you want to keep data through app restarts,
+//            // comment out the following block
+//            databaseWriteExecutor.execute(() -> {
+//                // Populate the database in the background.
+//                // If you want to start with more words, just add them.
+//                WordDao dao = INSTANCE.wordDao();
+//                dao.deleteAll();
+//
+//                Word word = new Word("Hello");
+//                dao.insert(word);
+//                word = new Word("World");
+//                dao.insert(word);
+//            });
+//        }
+//    };
 }

@@ -16,44 +16,51 @@ package com.example.android.roomwordssample;
  * limitations under the License.
  */
 
-import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.android.roomwordssample.enitiy.Word;
+import com.example.android.roomwordssample.enitiy.WordRepository;
 
 /**
  * Activity for entering a word.
  */
 
-public class NewWordActivity extends AppCompatActivity {
+public class NewWordFragment extends Fragment {
 
-    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
+    private WordRepository wordRepository;
 
     private EditText mEditWordView;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_word);
-        mEditWordView = findViewById(R.id.edit_word);
 
-        final Button button = findViewById(R.id.button_save);
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_new_word, container, false);
+        mEditWordView = rootView.findViewById(R.id.edit_word);
+
+        wordRepository = new WordRepository(getActivity().getApplication());
+
+        final Button button = rootView.findViewById(R.id.button_save);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(mEditWordView.getText())) {
-                    setResult(RESULT_CANCELED, replyIntent);
-                } else {
+                if (!TextUtils.isEmpty(mEditWordView.getText())) {
                     String word = mEditWordView.getText().toString();
-                    replyIntent.putExtra(EXTRA_REPLY, word);
-                    setResult(RESULT_OK, replyIntent);
+                    wordRepository.insert(new Word(word));
                 }
-                finish();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
+        return rootView;
     }
 }
 

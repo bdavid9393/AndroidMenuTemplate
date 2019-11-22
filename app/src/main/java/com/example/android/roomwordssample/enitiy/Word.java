@@ -1,4 +1,4 @@
-package com.example.android.roomwordssample;
+package com.example.android.roomwordssample.enitiy;
 
 /*
  * Copyright (C) 2017 Google Inc.

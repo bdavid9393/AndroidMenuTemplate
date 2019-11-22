@@ -34,6 +34,10 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.android.roomwordssample.enitiy.Word;
+import com.example.android.roomwordssample.enitiy.WordDao;
+import com.example.android.roomwordssample.enitiy.WordRoomDatabase;
+
 /**
  * This is not meant to be a full set of tests. For simplicity, most of your samples do not
  * include tests. However, when building the Room, it is helpful to make sure it works before
